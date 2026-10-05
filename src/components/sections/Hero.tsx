@@ -20,6 +20,9 @@ const skillIcons = [
   { name: 'Docker', file: 'icon-12.png' },
   { name: 'PostgreSQL', file: 'icon-13.png' },
   { name: 'Redis', file: 'icon-14.png' },
+  { name: 'Material UI', file: 'material ui.png' },
+  { name: 'Redux', file: 'redux.png' },
+  { name: 'Sass', file: 'sass.png' },
 ];
 
 export default function Hero() {

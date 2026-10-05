@@ -18,6 +18,14 @@ const skillIcons = [
   { name: 'Docker', file: 'icon-12.png' },
   { name: 'PostgreSQL', file: 'icon-13.png' },
   { name: 'Redis', file: 'icon-14.png' },
+  { name: 'Material UI', file: 'material ui.png' },
+  { name: 'Redux', file: 'redux.png' },
+  { name: 'Sass', file: 'sass.png' },
+];
+
+const skillIconRows = [
+  skillIcons.slice(0, Math.ceil(skillIcons.length / 2)),
+  skillIcons.slice(Math.ceil(skillIcons.length / 2)),
 ];
 
 export default function SkillsMatrix() {
@@ -41,7 +49,7 @@ export default function SkillsMatrix() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-5 flex items-center">
             <div className="skill-icon-wall" aria-label="Technology skills">
-              {[skillIcons.slice(0, 7), skillIcons.slice(7)].map((row, rowIndex) => (
+              {skillIconRows.map((row, rowIndex) => (
                 <div
                   className={`skill-logo-marquee${rowIndex === 1 ? ' reverse' : ''}`}
                   key={rowIndex}

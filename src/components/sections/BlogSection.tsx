@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowUpRight, BookOpen, Clock } from 'lucide-react';
+import { ArrowUpRight, Clock } from 'lucide-react';
+import Link from 'next/link';
 import { blogPosts } from '../../data/portfolioData';
 
 export default function BlogSection() {
@@ -46,8 +47,8 @@ export default function BlogSection() {
 
                 {/* Abstract Code graphic inside card preview */}
                 <div className="my-auto font-mono text-[10px] text-[#5c5c6b] space-y-1">
-                  <div>&gt; import &#123; performance &#125; from 'next'</div>
-                  <div>&gt; query.optimize(&#123; latency: '&lt; 100ms' &#125;)</div>
+                  <div>&gt; import &#123; performance &#125; from &apos;next&apos;</div>
+                  <div>&gt; query.optimize(&#123; latency: &apos;&lt; 100ms&apos; &#125;)</div>
                 </div>
 
                 <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#8F8F92] z-10">
@@ -71,13 +72,13 @@ export default function BlogSection() {
                 </div>
 
                 <div className="mt-4 pt-3 border-t border-[#252532]">
-                  <a
-                    href="#contact"
+                  <Link
+                    href={`/blog/${post.slug}`}
                     className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-300 group-hover:text-[#C0DCBC] transition-colors"
                   >
                     <span>Read Article</span>
                     <ArrowUpRight className="h-3 w-3" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </motion.div>

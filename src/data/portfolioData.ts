@@ -40,6 +40,11 @@ export interface BlogPost {
   title: string;
   description: string;
   slug: string;
+  content: {
+    heading: string;
+    paragraphs: string[];
+    points?: string[];
+  }[];
 }
 
 export const personalInfo = {
@@ -212,7 +217,7 @@ export const certificationData: ResumeItem[] = [
 export const skillsCategorized = [
   {
     label: "Front-End:",
-    skills: "HTML, CSS, JavaScript, TypeScript, React, Next.js 15, Tailwind CSS, Framer Motion",
+    skills: "HTML, CSS, Sass, JavaScript, TypeScript, React, Redux, Next.js 15, Material UI, Tailwind CSS, Framer Motion",
   },
   {
     label: "Back-End:",
@@ -241,6 +246,41 @@ export const blogPosts: BlogPost[] = [
     title: "Optimizing Full Stack MERN Applications for Speed",
     description: "Architectural strategies for cutting API latency and optimizing database queries in production.",
     slug: "optimizing-mern-speed",
+    content: [
+      {
+        heading: "Start with the slowest user journey",
+        paragraphs: [
+          "Performance work is most effective when it starts with a real request, not a guess. Measure a user journey from the browser through the API and database, and record where time is spent. A slow page might be waiting on a large JavaScript bundle, an API call, an inefficient query, or several of these at once.",
+          "Use browser performance tools and server-side timings to establish a baseline before changing code. Track percentiles as well as averages: a healthy average can hide requests that are painfully slow for a meaningful share of users.",
+        ],
+      },
+      {
+        heading: "Keep API work focused",
+        paragraphs: [
+          "A React screen should not need to fetch an entire record when it only displays a name, status, and thumbnail. Shape API responses around the screen's needs, paginate collections, and avoid serial requests when independent data can be loaded together.",
+          "On the server, validate input at the boundary and keep route handlers predictable. Clear response shapes make it easier to cache safely and help the frontend avoid extra transformation work.",
+        ],
+        points: [
+          "Return only the fields the current view needs.",
+          "Paginate large collections and make sorting explicit.",
+          "Parallelize independent requests where dependencies allow it.",
+        ],
+      },
+      {
+        heading: "Make database queries do less",
+        paragraphs: [
+          "Inspect query plans before adding indexes. An index can speed up a common filter or sort, but it also adds storage and makes writes more expensive. Choose indexes from observed query patterns, then confirm they are being used.",
+          "For MongoDB, project only required fields and be alert to repeated per-item lookups. For relational databases, check join conditions and constraints as well as indexes. In both cases, pagination should have a stable ordering so that results do not jump between requests.",
+        ],
+      },
+      {
+        heading: "Cache with a clear freshness rule",
+        paragraphs: [
+          "Caching can reduce repeated work, but only when the application knows how stale a value may be. Cache public, slowly changing data first; define expiration or invalidation behavior before caching user-specific responses. A cache without a freshness rule can make the application faster and less correct at the same time.",
+          "After each change, compare the same metrics against the baseline and verify the user journey still behaves correctly. Small measured improvements are easier to keep than a large rewrite whose impact is unclear.",
+        ],
+      },
+    ],
   },
   {
     id: "blog-2",
@@ -250,6 +290,41 @@ export const blogPosts: BlogPost[] = [
     title: "Best Practices for Secure Next.js 15 Deployments",
     description: "Exploring Server Actions, authentication middleware, and CSP headers for modern web apps.",
     slug: "nextjs-15-security",
+    content: [
+      {
+        heading: "Treat every boundary as untrusted",
+        paragraphs: [
+          "A polished interface is not an authorization layer. Validate incoming data on the server, and check the current user's identity and permissions inside every operation that reads or changes protected data. Hiding a button or protecting a page route is useful for the experience, but it does not secure the underlying action.",
+          "Keep secrets in server-only environment variables. Values exposed to browser bundles should be treated as public, even when their names look internal.",
+        ],
+      },
+      {
+        heading: "Authorize mutations on the server",
+        paragraphs: [
+          "Server Actions and route handlers are callable entry points. Parse and validate their inputs, establish the user's session, and verify resource-level access before performing a mutation. Prefer an allow-list of accepted fields so a request cannot update properties the UI never intended to expose.",
+          "Return only what the client needs. Avoid sending session tokens, internal error details, or full database records to a component that only needs a small status value.",
+        ],
+        points: [
+          "Validate shape, type, and allowed values at the server boundary.",
+          "Check authorization for the specific record being accessed.",
+          "Use generic client-facing errors and keep diagnostics in server logs.",
+        ],
+      },
+      {
+        heading: "Use middleware as a gate, not the whole lock",
+        paragraphs: [
+          "Middleware is useful for broad routing decisions, such as redirecting users without a session away from a dashboard. It should not be the only place where permission is checked. Data operations need their own authorization because they can be reached through other paths and can evolve independently of the page layout.",
+          "Make session expiry and refresh behavior explicit. Test unauthenticated requests, expired sessions, and users who are signed in but lack the required role.",
+        ],
+      },
+      {
+        heading: "Add browser protections deliberately",
+        paragraphs: [
+          "A Content Security Policy can reduce the impact of cross-site scripting by limiting which scripts and resources the browser may load. Start by inventorying the resources the application actually uses, then adopt a restrictive policy that fits them. Nonces or hashes can help avoid relying on broad unsafe script allowances.",
+          "Security headers complement input validation, output escaping, dependency updates, and careful cookie settings; none of them replaces those controls. Revisit the deployed response headers and logs after each production change to ensure the policy is active and not silently weakened.",
+        ],
+      },
+    ],
   },
   {
     id: "blog-3",
@@ -259,6 +334,40 @@ export const blogPosts: BlogPost[] = [
     title: "Balancing MySQL & MongoDB in Enterprise Portals",
     description: "When to use ACID relational tables versus flexible document aggregations.",
     slug: "mysql-vs-mongodb-architecture",
+    content: [
+      {
+        heading: "Choose around the shape of the data",
+        paragraphs: [
+          "The choice between MySQL and MongoDB is not a contest between old and new. It is a decision about the data's relationships, consistency requirements, and access patterns. A relational model is a natural fit when records depend on clear relationships and the application benefits from constraints and joins.",
+          "A document model can be convenient when a record is commonly read as a cohesive unit and its structure varies in meaningful ways. Flexibility still needs discipline: documents benefit from validation, versioning decisions, and limits on unbounded nested arrays.",
+        ],
+      },
+      {
+        heading: "Model the workflows, not just the screens",
+        paragraphs: [
+          "List the important reads and writes before choosing a schema. Consider how a user creates, edits, searches, and reports on the data, and how those operations behave when two changes happen at once. The best schema makes the important workflows understandable and keeps correctness close to the data.",
+          "For MySQL, use transactions when several related changes must succeed together, and define foreign keys and unique constraints for invariants the database can enforce. For MongoDB, use atomic updates where possible and transactions when a workflow truly spans multiple documents.",
+        ],
+      },
+      {
+        heading: "Use a database per need only when it earns its cost",
+        paragraphs: [
+          "Some systems use both databases, but operating two persistence layers adds deployment, monitoring, backup, and consistency work. A second database is justified when a concrete access pattern or domain requirement cannot be served well by the primary store, not simply because both technologies are familiar.",
+        ],
+        points: [
+          "Document the source of truth for each piece of data.",
+          "Plan how updates move between stores and how failures are repaired.",
+          "Measure the operational cost alongside query performance.",
+        ],
+      },
+      {
+        heading: "Let evidence guide the final decision",
+        paragraphs: [
+          "Prototype the highest-risk workflows with realistic data volumes. Check query plans, transaction behavior, migration effort, and the team's ability to operate the chosen system. Benchmarks are useful only when they reflect the application's actual reads and writes.",
+          "For many enterprise portals, one well-modeled relational database is enough. For others, a document store better matches the domain. Keep the architecture as simple as the requirements allow, and revisit the decision when the workload provides evidence that it should change.",
+        ],
+      },
+    ],
   },
 ];
 
