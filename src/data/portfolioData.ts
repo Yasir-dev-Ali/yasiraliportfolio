@@ -119,6 +119,18 @@ export const servicesData: ServiceItem[] = [
 
 export const projectsData: ProjectItem[] = [
   {
+    id: "aurelia-realty-os",
+    title: "Aurelia Realty OS",
+    tagline: "A more considered way to work",
+    description: "A real estate brokerage workspace bringing teams, properties, leads, viewings, and deals together in one place.",
+    category: "Real Estate CRM",
+    liveUrl: "https://real-estate-web-crm.vercel.app/",
+    previewImage: "/projects/real-estate-crm.png",
+    imageAlt: "Aurelia Realty OS real estate CRM landing page",
+    frontendTech: ["Not publicly documented"],
+    backendTech: ["Not publicly documented"],
+  },
+  {
     id: "collingwood-press",
     title: "The Collingwood Press",
     tagline: "Book publishing, from manuscript to marketplace",
