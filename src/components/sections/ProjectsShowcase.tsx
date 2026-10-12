@@ -72,7 +72,7 @@ export default function ProjectsShowcase() {
 
                   <div className="flex flex-wrap gap-3 mb-6">
                     <a
-                      href={personalInfo.github}
+                      href={currentProject.githubUrl ?? personalInfo.github}
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex items-center gap-2 rounded-lg border border-[#C0DCBC]/50 bg-transparent px-4 py-2 text-sm font-semibold text-[#C0DCBC] transition-colors hover:border-[#C0DCBC] hover:bg-[#C0DCBC]/10"

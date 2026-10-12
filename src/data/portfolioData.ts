@@ -5,6 +5,7 @@ export interface ProjectItem {
   description: string;
   category: string;
   liveUrl: string;
+  githubUrl?: string;
   previewImage: string;
   imageAlt: string;
   frontendTech: string[];
@@ -125,10 +126,11 @@ export const projectsData: ProjectItem[] = [
     description: "A real estate brokerage workspace bringing teams, properties, leads, viewings, and deals together in one place.",
     category: "Real Estate CRM",
     liveUrl: "https://real-estate-web-crm.vercel.app/",
+    githubUrl: "https://github.com/Yasir-dev-Ali/real-estate-web-crm",
     previewImage: "/projects/real-estate-crm.png",
     imageAlt: "Aurelia Realty OS real estate CRM landing page",
-    frontendTech: ["Not publicly documented"],
-    backendTech: ["Not publicly documented"],
+    frontendTech: ["React 18", "Vite", "Tailwind CSS", "Framer Motion", "Recharts"],
+    backendTech: ["Node.js", "Express.js", "MongoDB", "Mongoose", "JWT"],
   },
   {
     id: "collingwood-press",
